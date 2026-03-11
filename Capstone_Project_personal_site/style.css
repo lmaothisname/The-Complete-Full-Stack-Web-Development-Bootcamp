@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+.container {
+    margin-right: 200px
+
+}
+#headers .fs-2 {
+    padding-right: 400px; 
+}
+
+#headers .align-ul {
+    padding-left: 100px;
+}
+.header-background {
+    background: linear-gradient(to right, #0e8388 50%, #2e7092 50%);
+}
+
+/* change the font color to white */
+.header-background .nav-link {
+    color: white !important;
+    font-size: 1.1rem;
+    padding: 8px 16px;
+}
+
+.header-background .nav-link.main {
+    border-bottom: 2px solid white; 
+    border-radius: 0;
+}
+
+#Heroes {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+
+#Heroes .col-lg-6:first-child {
+  padding-right: 400px; 
+}
+
+
+.self-img {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 10px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.header-background h1{
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+    color: white !important;
+}
+
+.header-background .lead {
+    font-weight: 300; 
+    letter-spacing: 0.5px;
+    color: white !important;
+}
+
+#Heroes .body-text {
+    padding-left: 50px;
+}
+.btn-primary {
+    background-color:  #0e8388 !important;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+}
+
+.btn-outline-secondary {
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 50px;
+    pad: 12px 30px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: white;
+    color: #2e7092 !important;
+}
+
+.body-about-me {
+    transform: translateX(-100px); 
+}
+
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.align-portfolio {
+    transform: translateX(-100px);
+    width: calc(100% + 100px);
+}
+
+
+.card {
+    margin-top: 30px; 
+}
+
+.project-img {
+    height: 250px; 
+    object-fit: cover; 
+    object-position: top; 
+}
+
+
+.footer-background {
+    background: linear-gradient(to right, #12848b, #26688c);
+}
