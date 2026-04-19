@@ -1,0 +1,104 @@
+<%- include("partials/header.ejs") %>
+<!-- HERO SECTION -->
+  <main class="hero">
+    
+    <!-- Badge in the topic -->
+    <div class="hero-badge">
+      <span class="sparkle">✦</span>
+      The Digital Curator Edition
+    </div>
+    
+    <!-- main topic -->
+    <h1 class="hero-title">
+      Your Daily Dose of<br>
+      Global News, Personalized
+    </h1>
+    
+    <!-- summary -->
+    <p class="hero-description">
+      Cut through the noise. Select your focal points and let our intelligent
+      engine curate the stories that matter to you, delivered in a serene
+      reading environment.
+    </p>
+    
+    <!-- select Form - send POST to /news -->
+    <form class="news-form" action="/news" method="POST">
+      
+      <!-- Dropdown select a topic-->
+      <div class="form-field">
+        <label for="category" class="field-label">FOCAL TOPIC</label>
+        <div class="select-wrapper">
+          <span class="select-icon">🔬</span>
+          <select name="category" id="category" class="form-select">
+            <option value="technology">Technology</option>
+            <option value="business">Business</option>
+            <option value="sports">Sports</option>
+            <option value="health">Health</option>
+            <option value="science">Science</option>
+            <option value="entertainment">Entertainment</option>
+          </select>
+          <span class="select-arrow">▾</span>
+        </div>
+      </div>
+      
+      <!-- Dropdown area -->
+      <div class="form-field">
+        <label for="country" class="field-label">REGION</label>
+        <div class="select-wrapper">
+          <span class="select-icon">🌐</span>
+          <select name="country" id="country" class="form-select">
+            <option value="us">Global Coverage</option>
+            <option value="us">United States</option>
+            <option value="gb">United Kingdom</option>
+            <option value="vn">Vietnam</option>
+            <option value="jp">Japan</option>
+            <option value="au">Australia</option>
+          </select>
+          <span class="select-arrow">▾</span>
+        </div>
+      </div>
+      
+      <!-- Submit button -->
+      <button type="submit" class="btn-submit">
+        Get News
+        <span class="arrow">→</span>
+      </button>
+      
+      <!-- Search area -->
+      <div class="form-row">
+    <div class="form-field search-field">
+      <label for="keyword" class="field-label">SEARCH KEYWORD (OPTIONAL)</label>
+      <div class="select-wrapper">
+        <span class="select-icon">🔍</span>
+        <input 
+          type="text" 
+          name="keyword" 
+          id="keyword" 
+          class="form-input"
+          placeholder='Tìm kiếm theo từ khoá, ví dụ: "AI", "climate change"...'
+        />
+        </div>
+      </div>
+    </div>
+    </form>
+    
+    <!-- Info -->
+    <div class="trust-info">
+      <span class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+        Verified Sources
+      </span>
+      <span class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="3" y1="21" x2="21" y2="3"/>
+        </svg>
+        Ad-Free Reading
+      </span>
+    </div>
+    
+  </main>
+<%- include("partials/footer.ejs") %>

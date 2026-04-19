@@ -1,0 +1,674 @@
+/* ========================================
+   RESET & BASE
+   ======================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Background gradient nhẹ tím-xanh giống ảnh mẫu */
+  background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #e0e7ff 100%);
+  min-height: 100vh;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+
+/* ========================================
+   NAVBAR
+   ======================================== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 60px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e1b4b;           /* Xanh navy đậm */
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #4a5568;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #1e1b4b;
+}
+
+.user-icon {
+  color: #4a5568;
+  cursor: pointer;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 40px 120px;
+  text-align: center;
+}
+
+/* Badge phía trên tiêu đề */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: rgba(219, 234, 254, 0.8);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e40af;
+  margin-bottom: 32px;
+}
+
+.sparkle {
+  color: #3b82f6;
+  font-size: 16px;
+}
+
+/* Tiêu đề chính - font to, đậm */
+.hero-title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #0f172a;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+}
+
+.hero-description {
+  font-size: 18px;
+  color: #475569;
+  max-width: 640px;
+  margin: 0 auto 56px;
+  line-height: 1.6;
+}
+
+/* ========================================
+   FORM - Khung trắng bo tròn có đổ bóng
+   ======================================== */
+.news-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(30, 27, 75, 0.08);
+  max-width: 1000px;
+  margin: 0 auto 32px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
+  padding-left: 60px;      /* Lùi vào cho thẳng với text của select */
+}
+
+/* Wrapper để chứa icon + select + mũi tên */
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 16px;
+  background: #f8fafc;
+  transition: background 0.2s;
+}
+
+.select-wrapper:hover {
+  background: #f1f5f9;
+}
+
+.select-wrapper:focus-within {
+  background: #ffffff;
+  box-shadow: 0 0 0 2px #c7d2fe;
+}
+
+/* Icon tròn trắng bên trái mỗi dropdown */
+.select-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 50%;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+/* Select thực tế - ẩn mũi tên mặc định của browser */
+.form-select {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e293b;
+  outline: none;
+  padding: 0;
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.select-arrow {
+  color: #94a3b8;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Nút submit xanh navy */
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 22px 40px;
+  background: #1e1b4b;     /* Xanh navy đậm */
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  align-self: stretch;
+}
+
+.btn-submit:hover {
+  background: #312e81;
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+.arrow {
+  font-size: 18px;
+}
+
+/* Thông tin trust dưới form */
+.trust-info {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 60px;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  color: #64748b;
+}
+
+.footer-left {
+  font-weight: 600;
+  color: #1e1b4b;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #1e1b4b;
+}
+
+/* ========================================
+   RESPONSIVE - Mobile friendly
+   ======================================== */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  
+  .hero-title { font-size: 40px; }
+  .hero-description { font-size: 16px; }
+  
+  .news-form {
+    flex-direction: column;
+    padding: 16px;
+  }
+  
+  .form-field { width: 100%; }
+  
+  .btn-submit { width: 100%; padding: 18px; }
+  
+  .footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
+
+/* ========================================
+   NAV - Active state (highlight mục đang chọn)
+   ======================================== */
+.nav-links a.active {
+  color: #1e1b4b;
+  font-weight: 600;
+  position: relative;
+}
+
+/* Gạch chân dưới mục active */
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #1e1b4b;
+  border-radius: 2px;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.nav-icon {
+  cursor: pointer;
+  font-size: 18px;
+  color: #4a5568;
+}
+
+/* ========================================
+   RESULTS PAGE
+   ======================================== */
+.results-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+.page-title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+  padding-left: 54px;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 60px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chip-close {
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+/* ========================================
+   ARTICLES GRID - 3 cột
+   ======================================== */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.article-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(30, 27, 75, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(30, 27, 75, 0.12);
+}
+
+/* Card nổi bật - chiếm 2 cột, layout ngang */
+.card-featured {
+  grid-column: span 2;
+  grid-row: span 1;
+  flex-direction: row;
+}
+
+.card-featured .card-image {
+  width: 50%;
+  min-height: 450px;
+  flex-shrink: 0;
+}
+
+.card-featured .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-featured .card-content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Card thường - layout dọc */
+.card-image-small {
+  width: 100%;
+  height: 180px;
+  background: #f1f5f9;
+  overflow: hidden;
+}
+
+.card-image-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Badge category */
+.card-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+}
+
+.badge-top {
+  color: #3b82f6;
+}
+
+/* Tiêu đề */
+.card-title-large {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.card-description {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.card-description-small {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+  /* Giới hạn 3 dòng cho gọn */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-clamp: 3;
+}
+
+/* Footer trong card */
+.card-footer-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.source-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.source-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1e1b4b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.source-avatar-small {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1e1b4b;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.source-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.source-time {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.source-text-small {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Nút Read / Arrow */
+.btn-read {
+  padding: 8px 20px;
+  background: #e0e7ff;
+  color: #1e1b4b;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-read:hover {
+  background: #c7d2fe;
+}
+
+.btn-arrow {
+  color: #1e1b4b;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+/* Load More */
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+
+.btn-load-more {
+  padding: 14px 40px;
+  background: #ffffff;
+  color: #1e1b4b;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 15px;
+}
+
+.btn-load-more:hover {
+  background: #f8fafc;
+}
+
+/* Error & No results */
+.error-message {
+  padding: 16px 20px;
+  background: #fef2f2;
+  color: #991b1b;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.no-results p {
+  font-size: 16px;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.btn-back {
+  color: #1e1b4b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .articles-grid { grid-template-columns: 1fr; }
+  .card-featured { grid-column: span 1; flex-direction: column; }
+  .card-featured .card-image { width: 100%; min-height: 250px; }
+  .page-title { font-size: 32px; }
+}

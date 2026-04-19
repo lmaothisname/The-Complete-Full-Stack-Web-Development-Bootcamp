@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardify- <%= typeof pageTitle !== 'undefined' ? pageTitle : 'Home' %></title>
+
+    <!-- Google Fonts: Inter for ui look modern and clean -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- file main css -->
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a href="/" class="logo">Cardify</a>
+
+      <ul class="nav-links">
+        <li>
+          <a
+            href="/category/politics"
+            class="<%= activeNav === 'politics' ? 'active' : '' %>"
+            >Politics</a
+          >
+        </li>
+        <li>
+          <a
+            href="/category/technology"
+            class="<%= activeNav === 'technology' ? 'active' : '' %>"
+            >Technology</a
+          >
+        </li>
+        <li>
+          <a
+            href="/category/culture"
+            class="<%= activeNav === 'culture' ? 'active' : '' %>"
+            >Culture</a
+          >
+        </li>
+        <li>
+          <a
+            href="/category/business"
+            class="<%= activeNav === 'business' ? 'active' : '' %>"
+            >Business</a
+          >
+        </li>
+        <li>
+          <a
+            href="/category/science"
+            class="<%= activeNav === 'science' ? 'active' : '' %>"
+            >Science</a
+          >
+        </li>
+      </ul>
+
+      <div class="user-icon">
+        <!-- Icon user SVG -->
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="10" r="3" />
+          <path d="M7 20c0-3 2.5-5 5-5s5 2 5 5" />
+        </svg>
+      </div>
+    </nav>
+  </body>
+</html>

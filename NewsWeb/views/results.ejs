@@ -1,0 +1,119 @@
+<%- include('partials/header.ejs') %>
+<main class="result-page">
+  <!-- page title -->
+  <h1 class="page-title"><%= category.charAt(0).toUpperCase() + category.slice(1) %></h1>
+
+  <!-- filter bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Showing results for:</span>
+
+    <!-- chip category -->
+    <span class="filter-chip">
+      <%= category.charAt(0).toUpperCase() + category.slice(1) %>
+      <span class="chip-close">✕</span>
+    </span>
+
+    <!-- chip country - available if it is not gloabl -->
+    <% if (country && country !== 'global') { %>
+      <span class="filter-chip">
+        <%= country.toUpperCase() %>
+        <span class="chip-close">✕</span>
+      </span>
+    <% } %>
+    
+    <!-- Chip keyword - just show when user enter an input -->
+    <% if (keyword && keyword.trim() !== '') { %>
+      <span class="filter-chip">
+        "<%= keyword %>"
+        <span class="chip-close">✕</span>
+      </span>
+    <% } %>
+  </div>
+
+    <!-- show error when something went wrong -->
+    <% if (typeof error !== 'undefined' && error) { %>
+    <div class="error-message">
+      <%= error %>
+    </div>
+    <% } %>
+
+    <!-- if no articles -->
+    <% if (articles.length === 0 && (typeof error === "undefined" || !error)) { %>
+    <div class="no-results">
+      <p>Không tìm thấy tin tức phù hợp. Vui lòng thử từ khoá hoặc chủ đề khác.</p>
+      <a href="/" class="btn-back">← Quay lại trang chủ</a>
+    </div>
+    <% } else { %>
+    
+    <!-- article Grid - 3 colmns, first post get 2 columns -->
+    <div class="articles-grid">
+
+      <!-- TOP STORY - first post, display larger -->
+      <% if (articles[0]) { %>
+      <article class="article-card card-featured">
+        <div class="card-image">
+          <img src="<%= articles[0].urlToImage %>" alt="<%= articles[0].title %>" 
+               onerror="this.style.display='none'">
+        </div>
+        <div class="card-content">
+          <span class="card-badge badge-top">● TOP STORY</span>
+          <h2 class="card-title-large"><%= articles[0].title %></h2>
+          <p class="card-description"><%= articles[0].description %></p>
+          
+          <div class="card-footer-info">
+            <div class="source-info">
+              <div class="source-avatar">
+                <%= articles[0].source.name.substring(0, 2).toUpperCase() %>
+              </div>
+              <div class="source-text">
+                <div class="source-name"><%= articles[0].source.name %></div>
+                <div class="source-time">
+                  <%= new Date(articles[0].publishedAt).toLocaleString('vi-VN') %>
+                </div>
+              </div>
+            </div>
+            <a href="<%= articles[0].url %>" target="_blank" class="btn-read">Read</a>
+          </div>
+        </div>
+      </article>
+      <% } %>
+
+        <!-- Remaining posts - small card format -->
+        <% for (let i = 1; i < articles.length; i++) { %>
+      <article class="article-card">
+        <div class="card-image-small">
+          <img src="<%= articles[i].urlToImage %>" alt="<%= articles[i].title %>"
+               onerror="this.style.display='none'">
+        </div>
+        <div class="card-content">
+          <span class="card-badge"><%= articles[i].source.name.toUpperCase() %></span>
+          <h3 class="card-title"><%= articles[i].title %></h3>
+          <p class="card-description-small"><%= articles[i].description %></p>
+          
+          <div class="card-footer-info">
+            <div class="source-info">
+              <div class="source-avatar-small">
+                <%= articles[i].source.name.substring(0, 2).toUpperCase() %>
+              </div>
+              <div class="source-text-small">
+                <%= articles[i].source.name %> • 
+                <%= new Date(articles[i].publishedAt).toLocaleDateString('vi-VN') %>
+              </div>
+            </div>
+            <a href="<%= articles[i].url %>" target="_blank" class="btn-arrow">→</a>
+          </div>
+        </div>
+      </article>
+    <% } %>
+    
+  </div>
+
+  <!-- Load more button -->
+  <div class="load-more-wrapper">
+    <button class="btn-load-more">Load More Articles</button>
+  </div>
+  
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
