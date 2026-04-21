@@ -539,8 +539,8 @@ in the Software without restriction...
 
 Have questions? Found a bug? Open an issue or reach out:
 
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
+- GitHub: [@lmaothisname](https://github.com/lmaothisname)
+- Email: trancaoanhkiet@gmail.com
 
 ---
 
