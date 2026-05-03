@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Book Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════
+       HEADER
+  ════════════════════════════════ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="site-title">Book Notes</h1>
+      <!-- Nút này gọi JS openAddModal() thay vì chuyển trang -->
+      <button class="btn btn-primary" onclick="openAddModal()">
+        <span class="btn-icon">+</span> Add Book
+      </button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════
+       SORT BAR
+       sort param pass from Express: ?sort=rating|date|title
+  ════════════════════════════════ -->
+  <div class="sort-bar">
+    <div class="container sort-inner">
+      <nav class="sort-nav">
+        <a href="/?sort=rating" class="sort-link <%= sort === 'rating' ? 'active' : '' %>">Rating</a>
+        <a href="/?sort=date"   class="sort-link <%= sort === 'date'   ? 'active' : '' %>">Date Read</a>
+        <a href="/?sort=title"  class="sort-link <%= sort === 'title'  ? 'active' : '' %>">Title</a>
+      </nav>
+      <span class="book-count">
+        <%= books.length %> book<%= books.length !== 1 ? 's' : '' %>
+      </span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       MAIN — The List of books
+  ════════════════════════════════ -->
+  <main class="container main-content">
+
+    <% if (books.length === 0) { %>
+      <div class="empty-state">
+        <p>No books yet.</p>
+        <button class="btn btn-primary" onclick="openAddModal()">Add your first book →</button>
+      </div>
+    <% } %>
+
+    <ul class="book-list">
+      <% books.forEach(function(book) { %>
+        <li class="book-card">
+
+          <!-- image cover book from Open Library Covers API of ISBN -->
+          <div class="book-cover-wrap">
+            <% if (book.isbn) { %>
+              <img
+                class="book-cover"
+                src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+                alt="Cover of <%= book.title %>"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+              />
+            <% } %>
+            <!-- Fallback: first lette of books -->
+            <div class="book-cover-placeholder" style="<%= book.isbn ? 'display:none' : '' %>">
+              <span><%= book.title.charAt(0).toUpperCase() %></span>
+            </div>
+          </div>
+
+          <!-- book information -->
+          <div class="book-info">
+
+            <div class="book-header">
+              <div class="book-meta-left">
+                <h2 class="book-title"><%= book.title %></h2>
+                <p class="book-author"><%= book.author %></p>
+              </div>
+              <!-- Rating: render star of values 1-5 -->
+              <div class="star-rating" aria-label="<%= book.rating %> out of 5 stars">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <span class="star <%= i <= book.rating ? 'filled' : 'empty' %>">&#9733;</span>
+                <% } %>
+              </div>
+            </div>
+
+            <p class="book-notes"><%= book.notes %></p>
+
+            <div class="book-footer">
+              <!-- Format date: "Oct 12, 2024" -->
+              <span class="book-date">
+                <%
+                  const d = new Date(book.date_read);
+                  const formatted = d.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric'
+                  });
+                %>
+                <%= formatted %>
+              </span>
+
+              <div class="book-actions">
+                <!-- Edit button: call JS, pass id to fetch data from server -->
+                <button class="action-link" onclick="openEditModal(<%= book.id %>)">Edit</button>
+
+                <!-- Delete button: POST with _method=DELETE (method-override) -->
+                <form
+                  action="/books/<%= book.id %>?_method=DELETE"
+                  method="POST"
+                  class="inline-form"
+                  onsubmit="return confirm('Delete this book?')"
+                >
+                  <button type="submit" class="action-link danger">Delete</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+
+  </main>
+
+  <!-- ════════════════════════════════
+       FOOTER
+  ════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="footer-copy">&copy; <%= new Date().getFullYear() %> Book Notes</span>
+      <nav class="footer-nav">
+        <a href="/"         class="footer-link active">Library</a>
+        <a href="/archive"  class="footer-link">Archive</a>
+        <a href="/settings" class="footer-link">Settings</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════
+       MODAL — ADD / EDIT BOOK
+  ════════════════════════════════ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Add New Book</h2>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+
+      <!--
+        form action change with custom case:
+          Add  → action="/books"           (POST)
+          Edit → action="/books/:id"       (POST + hidden _method=PUT)
+      -->
+      <form id="bookForm" method="POST" action="/books">
+        <!-- Hidden field: method override for PUT when edit -->
+        <input type="hidden" name="_method" id="formMethod" value="" />
+
+        <div class="field">
+          <label for="fieldTitle">BOOK TITLE</label>
+          <input type="text" id="fieldTitle" name="title"
+                 placeholder="e.g. Great Expectations" required />
+        </div>
+
+        <div class="field">
+          <label for="fieldAuthor">AUTHOR</label>
+          <input type="text" id="fieldAuthor" name="author"
+                 placeholder="e.g. Charles Dickens" required />
+        </div>
+
+        <div class="field">
+          <label for="fieldIsbn">
+            ISBN <span class="label-hint">(optional — to take cover image)</span>
+          </label>
+          <input type="text" id="fieldIsbn" name="isbn"
+                 placeholder="e.g. 9780735211292" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fieldRating">RATING</label>
+            <select id="fieldRating" name="rating" required>
+              <option value="5">★★★★★ — 5 Stars</option>
+              <option value="4">★★★★☆ — 4 Stars</option>
+              <option value="3">★★★☆☆ — 3 Stars</option>
+              <option value="2">★★☆☆☆ — 2 Stars</option>
+              <option value="1">★☆☆☆☆ — 1 Star</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fieldDate">DATE READ</label>
+            <input type="date" id="fieldDate" name="date_read" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fieldNotes">NOTES / REVIEW</label>
+          <textarea id="fieldNotes" name="notes" rows="4"
+                    placeholder="Write your thoughts here..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Save Book</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════ -->
+  <script>
+    const overlay   = document.getElementById('modalOverlay');
+    const bookForm  = document.getElementById('bookForm');
+    const titleEl   = document.getElementById('modalTitle');
+    const methodEl  = document.getElementById('formMethod');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // references all of field
+    const fields = {
+      title:  document.getElementById('fieldTitle'),
+      author: document.getElementById('fieldAuthor'),
+      isbn:   document.getElementById('fieldIsbn'),
+      rating: document.getElementById('fieldRating'),
+      date:   document.getElementById('fieldDate'),
+      notes:  document.getElementById('fieldNotes'),
+    };
+
+    // Delete all of field to empty
+    function resetForm() {
+      fields.title.value  = '';
+      fields.author.value = '';
+      fields.isbn.value   = '';
+      fields.notes.value  = '';
+      fields.date.value   = '';
+      fields.rating.value = '5'; // 5 star standard
+    }
+
+    // ── open modal ADD ──
+    function openAddModal() {
+      resetForm();
+      titleEl.textContent   = 'Add New Book';
+      bookForm.action       = '/books';
+      methodEl.value        = '';
+      submitBtn.textContent = 'Save Book';
+      overlay.classList.add('open');
+      fields.title.focus();
+    }
+
+    // ── open modal EDIT ──
+    // Fetch book data from server and then fill the form
+    async function openEditModal(id) {
+      try {
+        const res = await fetch('/books/' + id + '/edit');
+        if (!res.ok) throw new Error('can not take the data from book');
+        const book = await res.json();
+
+        // fill datra in the field
+        fields.title.value  = book.title  || '';
+        fields.author.value = book.author || '';
+        fields.isbn.value   = book.isbn   || '';
+        fields.notes.value  = book.notes  || '';
+        fields.rating.value = book.rating || '5';
+
+        fields.date.value   = book.date_read ? book.date_read.split('T')[0] : '';
+
+        // change title + action of form to Edit
+        titleEl.textContent   = 'Edit Book';
+        bookForm.action       = '/books/' + id + '?_method=PUT';
+        methodEl.value        = 'PUT';
+        submitBtn.textContent = 'Save Changes';
+
+        overlay.classList.add('open');
+        fields.title.focus();
+
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    // ── close modal ──
+    function closeModal() {
+      overlay.classList.remove('open');
+    }
+
+    // Click the dark side out of the modal → close
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal();
+    });
+
+    // key ESC → close modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>
